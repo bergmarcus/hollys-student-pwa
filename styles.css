@@ -131,7 +131,7 @@ main {
   background: #faf8fc;
   border: 1.5px solid #e2d8ec;
   border-radius: 12px;
-  padding: 12px 10px 10px;
+  padding: 14px 12px;
   text-align: center;
 }
 
@@ -147,7 +147,8 @@ main {
 
 .dist-item .input-param {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  height: 48px;
 }
 
 .white-item { border-color: #d4c5a9; background: #fffdf6; }
