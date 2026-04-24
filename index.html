@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Hollys student – Vinräknare</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7b2d8b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Hollys student" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>🍷 Hollys student</h1>
+      <p class="subtitle">Beräkna åtgång av vin för Hollys student 2026</p>
+    </header>
+
+    <main>
+      <!-- Gäster & event -->
+      <section class="card">
+        <h2>Gäster &amp; event</h2>
+        <div class="param-grid">
+          <div class="param-item">
+            <label for="guests">Antal gäster</label>
+            <div class="param-input-row">
+              <input type="number" id="guests" min="1" placeholder="10" class="input-param" inputmode="numeric" />
+              <span class="param-unit">pers.</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="duration">Tid</label>
+            <div class="param-input-row">
+              <input type="number" id="duration" min="0.5" step="0.5" value="4" class="input-param" inputmode="decimal" />
+              <span class="param-unit">tim.</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="pace">Tempo</label>
+            <div class="param-input-row">
+              <input type="number" id="pace" min="0.5" step="0.5" value="1.5" class="input-param" inputmode="decimal" />
+              <span class="param-unit">glas/tim.</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="glasssize">Glasstorlek</label>
+            <div class="param-input-row">
+              <input type="number" id="glasssize" min="5" step="5" value="15" class="input-param" inputmode="numeric" />
+              <span class="param-unit">cl</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Öl -->
+      <section class="card beer-card">
+        <div class="beer-header">
+          <h2>🍺 Öl</h2>
+          <label class="toggle-label">
+            <input type="checkbox" id="beer-enabled" onchange="toggleBeer()" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="toggle-text">Inkludera i summering</span>
+          </label>
+        </div>
+        <div id="beer-inputs" class="param-grid beer-grid disabled-section">
+          <div class="param-item">
+            <label for="beer-per-person">Burkar/fl. per person</label>
+            <div class="param-input-row">
+              <input type="number" id="beer-per-person" min="0" step="1" value="2" class="input-param" inputmode="numeric" />
+              <span class="param-unit">st</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="beer-cl">Storlek</label>
+            <div class="param-input-row">
+              <input type="number" id="beer-cl" min="25" step="5" value="33" class="input-param" inputmode="numeric" />
+              <span class="param-unit">cl</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="price-beer">Pris per burk/fl.</label>
+            <div class="param-input-row">
+              <input type="number" id="price-beer" min="0" step="1" placeholder="—" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mousserande -->
+      <section class="card sparkling-card">
+        <h2>🍾 Mousserande</h2>
+        <p class="dist-hint">Beräknas separat — samtliga gäster antas dricka ett fast antal glas under hela kvällen.</p>
+        <div class="param-grid sparkling-grid">
+          <div class="param-item">
+            <label for="sparkling-glasses">Glas per person</label>
+            <div class="param-input-row">
+              <input type="number" id="sparkling-glasses" min="0" step="1" value="2" class="input-param" inputmode="numeric" />
+              <span class="param-unit">glas</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="sparkling-glasssize">Glasstorlek</label>
+            <div class="param-input-row">
+              <input type="number" id="sparkling-glasssize" min="5" step="5" value="15" class="input-param" inputmode="numeric" />
+              <span class="param-unit">cl</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fördelning -->
+      <section class="card">
+        <h2>Fördelning</h2>
+        <p class="dist-hint">Procent per vintyp — måste summera till 100.</p>
+        <div class="dist-grid">
+          <div class="dist-item white-item">
+            <span class="dist-icon">🥂</span>
+            <label for="pct-white">Vitt vin</label>
+            <div class="param-input-row">
+              <input type="number" id="pct-white" min="0" max="100" value="40" class="input-param" oninput="onPctChange()" inputmode="numeric" />
+              <span class="param-unit">%</span>
+            </div>
+          </div>
+          <div class="dist-item rose-item">
+            <span class="dist-icon">🌸</span>
+            <label for="pct-rose">Rosé</label>
+            <div class="param-input-row">
+              <input type="number" id="pct-rose" min="0" max="100" value="35" class="input-param" oninput="onPctChange()" inputmode="numeric" />
+              <span class="param-unit">%</span>
+            </div>
+          </div>
+          <div class="dist-item red-item">
+            <span class="dist-icon">🍷</span>
+            <label for="pct-red">Rött vin</label>
+            <div class="param-input-row">
+              <input type="number" id="pct-red" min="0" max="100" value="25" class="input-param" oninput="onPctChange()" inputmode="numeric" />
+              <span class="param-unit">%</span>
+            </div>
+          </div>
+        </div>
+        <div id="pct-bar" class="pct-bar">
+          <div id="bar-white" class="bar-seg bar-white" style="width:40%"></div>
+          <div id="bar-rose"  class="bar-seg bar-rose"  style="width:35%"></div>
+          <div id="bar-red"   class="bar-seg bar-red"   style="width:25%"></div>
+        </div>
+        <p id="pct-error" class="error-msg hidden">Procenten måste summera till exakt 100.</p>
+      </section>
+
+      <!-- Pris per flaska -->
+      <section class="card">
+        <h2>💰 Pris per flaska</h2>
+        <p class="dist-hint">Valfritt — fyll i de sorter du känner till priset på.</p>
+        <div class="price-section-grid">
+          <div class="price-section-item sparkling-price-item">
+            <span class="price-section-icon">🍾</span>
+            <label for="price-sparkling">Mousserande</label>
+            <div class="param-input-row">
+              <input type="number" id="price-sparkling" min="0" step="1" placeholder="—" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr/fl</span>
+            </div>
+          </div>
+          <div class="price-section-item white-price-item">
+            <span class="price-section-icon">🥂</span>
+            <label for="price-white">Vitt vin</label>
+            <div class="param-input-row">
+              <input type="number" id="price-white" min="0" step="1" placeholder="—" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr/fl</span>
+            </div>
+          </div>
+          <div class="price-section-item rose-price-item">
+            <span class="price-section-icon">🌸</span>
+            <label for="price-rose">Rosé</label>
+            <div class="param-input-row">
+              <input type="number" id="price-rose" min="0" step="1" placeholder="—" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr/fl</span>
+            </div>
+          </div>
+          <div class="price-section-item red-price-item">
+            <span class="price-section-icon">🍷</span>
+            <label for="price-red">Rött vin</label>
+            <div class="param-input-row">
+              <input type="number" id="price-red" min="0" step="1" placeholder="—" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr/fl</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Beräkna -->
+      <button class="btn-calculate" onclick="calculate()">Beräkna åtgång</button>
+
+      <!-- Resultat -->
+      <section id="results-section" class="card results hidden">
+        <h2>Resultat</h2>
+        <p id="results-summary" class="results-summary"></p>
+
+        <div class="per-person-box">
+          <h3>Per person</h3>
+          <div class="stat-row">
+            <span class="stat-label">Glas totalt</span>
+            <span id="r-glasses" class="stat-value"></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Centiliter</span>
+            <span id="r-cl" class="stat-value"></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Liter</span>
+            <span id="r-liter" class="stat-value"></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Flaskor (75 cl)</span>
+            <span id="r-bottles-pp" class="stat-value"></span>
+          </div>
+        </div>
+
+        <div class="total-box">
+          <h3>Totalt (<span id="r-guests-label"></span> pers.)</h3>
+          <div class="stat-row">
+            <span class="stat-label">Liter</span>
+            <span id="r-total-liter" class="stat-value"></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Flaskor totalt</span>
+            <span id="r-total-bottles" class="stat-value"></span>
+          </div>
+          <div id="r-total-cost-row" class="stat-row cost-row hidden">
+            <span class="stat-label">Total kostnad</span>
+            <span id="r-total-cost" class="stat-value cost-value"></span>
+          </div>
+        </div>
+
+        <div class="wine-breakdown">
+          <h3>Rekommendation per sort</h3>
+          <div id="r-beer-card" class="wine-card beer-result-card hidden">
+            <span class="wine-icon">🍺</span>
+            <div class="wine-info">
+              <div class="wine-name">Öl</div>
+              <div id="r-beer" class="wine-bottles"></div>
+              <div id="r-beer-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
+          <div class="wine-card sparkling-result-card">
+            <span class="wine-icon">🍾</span>
+            <div class="wine-info">
+              <div class="wine-name">Mousserande</div>
+              <div id="r-sparkling" class="wine-bottles"></div>
+              <div id="r-sparkling-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
+          <div class="wine-card white-card">
+            <span class="wine-icon">🥂</span>
+            <div class="wine-info">
+              <div class="wine-name">Vitt vin</div>
+              <div id="r-white" class="wine-bottles"></div>
+              <div id="r-white-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
+          <div class="wine-card rose-card">
+            <span class="wine-icon">🌸</span>
+            <div class="wine-info">
+              <div class="wine-name">Rosé</div>
+              <div id="r-rose" class="wine-bottles"></div>
+              <div id="r-rose-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
+          <div class="wine-card red-card">
+            <span class="wine-icon">🍷</span>
+            <div class="wine-info">
+              <div class="wine-name">Rött vin</div>
+              <div id="r-red" class="wine-bottles"></div>
+              <div id="r-red-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="renderer.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+    }
+  </script>
+</body>
+</html>
