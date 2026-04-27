@@ -25,18 +25,17 @@ function toggleBeer() {
 // —— Subway toggle ——
 function toggleSubway() {
   const enabled = document.getElementById('subway-enabled').checked
-  document.getElementById('subway-inputs').classList.toggle('disabled-section', !enabled)
   updateSubwayPreview()
 }
 
 // —— Live subway-förhandsgranskning ——
 function updateSubwayPreview() {
-  const guests     = parseFloat(document.getElementById('guests').value)
-  const perBox     = parseFloat(document.getElementById('subway-per-box').value) || 7
-  const price      = parseFloat(document.getElementById('subway-price').value)
-  const enabled    = document.getElementById('subway-enabled').checked
-  const previewEl  = document.getElementById('subway-preview')
-  const textEl     = document.getElementById('subway-preview-text')
+  const guests    = parseFloat(document.getElementById('guests').value)
+  const enabled   = document.getElementById('subway-enabled').checked
+  const previewEl = document.getElementById('subway-preview')
+  const textEl    = document.getElementById('subway-preview-text')
+  const perBox    = 7
+  const price     = 400
 
   if (!enabled || isNaN(guests) || guests < 1) {
     previewEl.classList.add('hidden')
@@ -44,11 +43,7 @@ function updateSubwayPreview() {
   }
 
   const boxes = Math.ceil(guests / perBox)
-  let text = `⇒ ${boxes} boxar för ${guests} gäster`
-  if (!isNaN(price) && price > 0) {
-    text += ` — ${fmtKr(boxes * price)} kr`
-  }
-  textEl.textContent = text
+  textEl.textContent = `⇒ ${boxes} boxar för ${guests} gäster — ${fmtKr(boxes * price)} kr`
   previewEl.classList.remove('hidden')
 }
 
@@ -81,8 +76,8 @@ function calculate() {
   const beerCl              = parseFloat(document.getElementById('beer-cl').value)
   const priceBeer           = parseFloat(document.getElementById('price-beer').value)
   const subwayEnabled       = document.getElementById('subway-enabled').checked
-  const subwayPerBox        = parseFloat(document.getElementById('subway-per-box').value) || 7
-  const subwayPrice         = parseFloat(document.getElementById('subway-price').value)
+  const subwayPerBox        = 7
+  const subwayPrice         = 400
 
   // Validering
   if (isNaN(guests) || guests < 1) {
