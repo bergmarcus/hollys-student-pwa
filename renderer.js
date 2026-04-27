@@ -26,7 +26,38 @@ function toggleBeer() {
 function toggleSubway() {
   const enabled = document.getElementById('subway-enabled').checked
   document.getElementById('subway-inputs').classList.toggle('disabled-section', !enabled)
+  updateSubwayPreview()
 }
+
+// —— Live subway-förhandsgranskning ——
+function updateSubwayPreview() {
+  const guests     = parseFloat(document.getElementById('guests').value)
+  const perBox     = parseFloat(document.getElementById('subway-per-box').value) || 7
+  const price      = parseFloat(document.getElementById('subway-price').value)
+  const enabled    = document.getElementById('subway-enabled').checked
+  const previewEl  = document.getElementById('subway-preview')
+  const textEl     = document.getElementById('subway-preview-text')
+
+  if (!enabled || isNaN(guests) || guests < 1) {
+    previewEl.classList.add('hidden')
+    return
+  }
+
+  const boxes = Math.ceil(guests / perBox)
+  let text = `⇒ ${boxes} boxar för ${guests} gäster`
+  if (!isNaN(price) && price > 0) {
+    text += ` — ${fmtKr(boxes * price)} kr`
+  }
+  textEl.textContent = text
+  previewEl.classList.remove('hidden')
+}
+
+// Lyssna på ändringar i gäster, persons/box och pris
+document.addEventListener('DOMContentLoaded', () => {
+  ['guests', 'subway-per-box', 'subway-price'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateSubwayPreview)
+  })
+})
 
 // —— Beräkna ——
 function calculate() {

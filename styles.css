@@ -278,6 +278,18 @@ main {
   border-color: #7ab648;
 }
 
+.subway-preview {
+  margin-top: 14px;
+  background: #e8f8d8;
+  border: 1.5px solid #7ab648;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3a6e10;
+  text-align: center;
+}
+
 /* Beer card */
 .beer-card {
   border: 1.5px solid #d4a843;
@@ -455,23 +467,17 @@ main {
    PWA / MOBILANPASSNING
    ===================== */
 
-/* Safe area för iPhone notch/Dynamic Island */
 .app {
   padding-bottom: calc(56px + env(safe-area-inset-bottom));
   padding-left: max(20px, env(safe-area-inset-left));
   padding-right: max(20px, env(safe-area-inset-right));
 }
 
-/* Större touch-ytor på mobil */
 @media (max-width: 600px) {
   header h1 { font-size: 1.6rem; }
-
   .param-grid { grid-template-columns: 1fr 1fr; }
-
   .beer-grid  { grid-template-columns: 1fr 1fr; }
-
   .dist-grid  { grid-template-columns: 1fr 1fr 1fr; }
-
   .price-section-grid { grid-template-columns: 1fr 1fr; }
 
   .input-param {
@@ -489,17 +495,12 @@ main {
   }
 
   .card { padding: 18px 16px; border-radius: 14px; }
-
   .wine-card { padding: 12px 14px; }
-
   .wine-icon { font-size: 1.4rem; }
-
   .wine-bottles { font-size: 0.9rem; }
-
   .stat-value { font-size: 0.9rem; }
 }
 
-/* Extra liten skärm */
 @media (max-width: 380px) {
   .dist-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .dist-item { padding: 8px 6px; }
