@@ -19,8 +19,13 @@ updateBar(40, 35, 25)
 // —— Öl toggle ——
 function toggleBeer() {
   const enabled = document.getElementById('beer-enabled').checked
-  const inputs  = document.getElementById('beer-inputs')
-  inputs.classList.toggle('disabled-section', !enabled)
+  document.getElementById('beer-inputs').classList.toggle('disabled-section', !enabled)
+}
+
+// —— Subway toggle ——
+function toggleSubway() {
+  const enabled = document.getElementById('subway-enabled').checked
+  document.getElementById('subway-inputs').classList.toggle('disabled-section', !enabled)
 }
 
 // —— Beräkna ——
@@ -44,6 +49,9 @@ function calculate() {
   const beerPerPerson       = parseFloat(document.getElementById('beer-per-person').value)
   const beerCl              = parseFloat(document.getElementById('beer-cl').value)
   const priceBeer           = parseFloat(document.getElementById('price-beer').value)
+  const subwayEnabled       = document.getElementById('subway-enabled').checked
+  const subwayPerBox        = parseFloat(document.getElementById('subway-per-box').value) || 7
+  const subwayPrice         = parseFloat(document.getElementById('subway-price').value)
 
   // Validering
   if (isNaN(guests) || guests < 1) {
@@ -114,7 +122,20 @@ function calculate() {
     }
   }
 
-  // —— Räkna & visa: öl ——
+  // —— Beräkna & visa: Subway ——
+  const subwayCard = document.getElementById('r-subway-card')
+  if (subwayEnabled) {
+    const boxes = Math.ceil(guests / subwayPerBox)
+    document.getElementById('r-subway').textContent =
+      boxes + ' boxar (à ' + subwayPerBox + ' pers/box, ' + boxes * subwayPerBox + ' portioner)'
+    subwayCard.classList.remove('hidden')
+    showCost('r-subway-cost', boxes, subwayPrice)
+  } else {
+    subwayCard.classList.add('hidden')
+    document.getElementById('r-subway-cost').classList.add('hidden')
+  }
+
+  // —— Beräkna & visa: öl ——
   const beerCard = document.getElementById('r-beer-card')
   if (beerEnabled && !isNaN(beerPerPerson) && beerPerPerson > 0) {
     const beerTotalUnits = Math.ceil(beerPerPerson * guests)

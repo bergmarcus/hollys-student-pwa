@@ -93,6 +93,35 @@
         </div>
       </section>
 
+      <!-- Subway -->
+      <section class="card subway-card">
+        <div class="beer-header">
+          <h2>🥖 Subway-mackor</h2>
+          <label class="toggle-label">
+            <input type="checkbox" id="subway-enabled" onchange="toggleSubway()" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="toggle-text">Inkludera i summering</span>
+          </label>
+        </div>
+        <div id="subway-inputs" class="param-grid sparkling-grid disabled-section">
+          <div class="param-item">
+            <label for="subway-per-box">Personer per box</label>
+            <div class="param-input-row">
+              <input type="number" id="subway-per-box" min="1" step="1" value="7" class="input-param" inputmode="numeric" />
+              <span class="param-unit">pers.</span>
+            </div>
+          </div>
+          <div class="param-item">
+            <label for="subway-price">Pris per box</label>
+            <div class="param-input-row">
+              <input type="number" id="subway-price" min="0" step="1" value="400" class="input-param" inputmode="numeric" />
+              <span class="param-unit">kr</span>
+            </div>
+          </div>
+        </div>
+        <p class="dist-hint" style="margin-top:12px;margin-bottom:0">1 box = 6–8 personer (standard 7). Antal boxar avrundas uppåt.</p>
+      </section>
+
       <!-- Mousserande -->
       <section class="card sparkling-card">
         <h2>🍾 Mousserande</h2>
@@ -236,6 +265,14 @@
 
         <div class="wine-breakdown">
           <h3>Rekommendation per sort</h3>
+          <div id="r-subway-card" class="wine-card subway-result-card hidden">
+            <span class="wine-icon">🥖</span>
+            <div class="wine-info">
+              <div class="wine-name">Subway-mackor</div>
+              <div id="r-subway" class="wine-bottles"></div>
+              <div id="r-subway-cost" class="wine-cost hidden"></div>
+            </div>
+          </div>
           <div id="r-beer-card" class="wine-card beer-result-card hidden">
             <span class="wine-icon">🍺</span>
             <div class="wine-info">
